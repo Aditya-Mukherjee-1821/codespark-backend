@@ -4,11 +4,14 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-origins = ["http://localhost:3001"] 
+origins = [
+    "https://codespark-beta.vercel.app",  # ✅ Add your deployed frontend
+    # "http://localhost:3001",              # ✅ Keep for local development (optional)
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # ⚠️ For local testing only
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
