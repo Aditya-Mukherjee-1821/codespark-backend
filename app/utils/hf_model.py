@@ -1,16 +1,20 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
+from huggingface_hub import login
 import torch
 import os
 
-# Set the model repo path
+from transformers import AutoTokenizer, AutoModelForCausalLM
+from huggingface_hub import login
+import os
+
+HF_TOKEN = os.getenv("HUGGINGFACE_TOKEN")
+if HF_TOKEN:
+    login(HF_TOKEN)  # Login using the token
+
 model_path = "adityamukherjeeofficial/codegen-350M-mono"
 
-# Optional: set token if model is private
-HF_TOKEN = os.getenv("HUGGINGFACE_TOKEN")
-
-# Load tokenizer and model from Hugging Face
-tokenizer = AutoTokenizer.from_pretrained(model_path, use_auth_token=HF_TOKEN)
-model = AutoModelForCausalLM.from_pretrained(model_path, use_auth_token=HF_TOKEN)
+tokenizer = AutoTokenizer.from_pretrained(model_path)
+model = AutoModelForCausalLM.from_pretrained(model_path)
 
 def get_code_hint(problem_description: str, user_code: str, test_input: str, expected_output: str, actual_output: str):
     prompt = f"""
